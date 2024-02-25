@@ -1,4 +1,6 @@
-const getClassInfo = (schedule) => {
+import scheduleInterface from "./interface";
+
+const getClassInfo = (schedule: scheduleInterface[]) => {
   // Get the current date and time
   const currentDate = new Date();
   const currentDay = currentDate.toLocaleString("en-US", { weekday: "short" });
@@ -8,10 +10,12 @@ const getClassInfo = (schedule) => {
 
   for (const classPeriod of schedule) {
     if (classPeriod.day === currentDay.toUpperCase()) {
-      const [startTime, endTime] = classPeriod.time.split(" - ").map((time) => {
-        const [hours, minutes] = time.split(":").map(Number);
-        return hours * 60 + minutes;
-      });
+      const [startTime, endTime] = classPeriod.time
+        .split(" - ")
+        .map((time: string) => {
+          const [hours, minutes] = time.split(":").map(Number);
+          return hours * 60 + minutes;
+        });
 
       if (currentTime >= startTime && currentTime <= endTime) {
         currentClass = classPeriod;
@@ -46,7 +50,8 @@ const getClassInfo = (schedule) => {
       if (classPeriod.day === currentDay.toUpperCase()) {
         const [startTime, endTime] = classPeriod.time
           .split(" - ")
-          .map((time) => {
+          .map((time: string) => {
+            // Add type annotation to 'time' parameter
             const [hours, minutes] = time.split(":").map(Number);
             return hours * 60 + minutes; // Convert time to minutes for easier comparison
           });
@@ -85,7 +90,7 @@ const getClassInfo = (schedule) => {
   return result;
 };
 
-const getScheduleDay = (schedule, day) => {
+const getScheduleDay = (schedule: scheduleInterface[], day: string) => {
   let result = "";
   for (const classPeriod of schedule) {
     if (classPeriod.day === day.toUpperCase()) {
@@ -106,8 +111,4 @@ const getScheduleDay = (schedule, day) => {
   return result;
 };
 
-// export the functions
-module.exports = {
-  getClassInfo,
-  getScheduleDay,
-};
+export { getClassInfo, getScheduleDay };
