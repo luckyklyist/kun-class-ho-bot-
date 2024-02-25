@@ -2,6 +2,8 @@
 
 Dont know what class you have next? Klyistifer has the answer.
 
+<img width="730" alt="Screenshot 2024-02-25 at 4 04 33 PM" src="https://github.com/luckyklyist/kun-class-ho-bot-/assets/35479077/834c5eb8-5e7c-49f5-9652-6d471a78b2d7">
+
 ## Features 🚀
 
 - **Class Schedule Clairvoyance:** Wondering what class you have next? Klyistifer has the answer, making it the mystical oracle of your academic life.
