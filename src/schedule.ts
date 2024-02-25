@@ -1,4 +1,6 @@
-const schedule = [
+import scheduleInterface from "./interface";
+
+const schedule: scheduleInterface[] = [
   {
     day: "SUN",
     time: "13:00 - 15:30",
@@ -109,4 +111,4 @@ const schedule = [
   },
 ];
 
-module.exports = schedule;
+export { schedule };

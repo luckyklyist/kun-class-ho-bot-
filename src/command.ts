@@ -1,5 +1,5 @@
-const { REST, Routes } = require("discord.js");
-const dotenv = require("dotenv");
+import { REST, Routes } from "discord.js";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -22,12 +22,12 @@ const commands = [
   },
 ];
 
-const rest = new REST({ version: "9" }).setToken(process.env.SECRETE_KEY);
+const rest = new REST({ version: "9" }).setToken(process.env.SECRETE_KEY!);
 
 (async () => {
   try {
     console.log("Started refreshing application (/) commands.");
-    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
+    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID!), {
       body: commands,
     });
     console.log("Successfully reloaded application (/) commands.");
