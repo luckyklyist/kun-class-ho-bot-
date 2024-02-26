@@ -20,6 +20,10 @@ const commands = [
       },
     ],
   },
+  {
+    name: "din",
+    description: "Reply with temperature of the day",
+  },
 ];
 
 const rest = new REST({ version: "9" }).setToken(process.env.SECRETE_KEY!);

@@ -1,7 +1,14 @@
-import { Client, GatewayIntentBits, Interaction, Message } from "discord.js";
+import {
+  Client,
+  EmbedBuilder,
+  GatewayIntentBits,
+  Interaction,
+  Message,
+} from "discord.js";
 import dotenv from "dotenv";
 import { getClassInfo, getScheduleDay } from "./readClassRoom";
 import { schedule } from "./schedule";
+import fetchWeather from "./weather";
 
 dotenv.config();
 
@@ -41,6 +48,36 @@ client.on("interactionCreate", async (interaction) => {
     const result = getScheduleDay(schedule, day);
     interaction.reply({
       content: result,
+    });
+  }
+  if (interaction.isCommand() && interaction.commandName === "din") {
+    console.log("din command called");
+    const infoWeather = await fetchWeather();
+    // embed weather info
+    const embed = new EmbedBuilder()
+      .setTitle("Weather Info")
+      .setDescription("Weather information kathamndu Today ⚡️☀️")
+      .setColor("#0099ff")
+      .addFields(
+        {
+          name: "Current Temperature 🌡️",
+          value: `${infoWeather?.currentTemperature}°C`,
+          inline: true,
+        },
+        {
+          name: "Timezone 🕒",
+          value: infoWeather?.timezone,
+          inline: true,
+        },
+        {
+          name: "Average Temperature 🌍 KTM",
+          value: `${infoWeather?.avgTemperature}°C`,
+          inline: true,
+        }
+      );
+
+    interaction.reply({
+      embeds: [embed],
     });
   }
 });
