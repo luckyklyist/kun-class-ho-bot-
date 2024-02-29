@@ -35,55 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var discord_js_1 = require("discord.js");
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-var commands = [
-    {
-        name: "kunho",
-        description: "Replies the current class and starting time",
-    },
-    {
-        name: "sabai",
-        description: "Reply with all the classes of the day",
-        options: [
-            {
-                name: "day",
-                description: "Select the day",
-                type: 3,
-                required: true,
-            },
-        ],
-    },
-    {
-        name: "din",
-        description: "Reply with temperature of the day",
-    },
-];
-var rest = new discord_js_1.REST({ version: "9" }).setToken(process.env.SECRETE_KEY);
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var error_1;
+var fetchWeather = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, data, hourlyTemperatures, avgTemperature, timezone, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                console.log("Started refreshing application (/) commands.");
-                return [4 /*yield*/, rest.put(discord_js_1.Routes.applicationCommands(process.env.CLIENT_ID), {
-                        body: commands,
-                    })];
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, fetch("https://api.open-meteo.com/v1/forecast?latitude=27.7017&longitude=85.3206&current=temperature_2m&hourly=temperature_2m,rain&timezone=auto")];
             case 1:
-                _a.sent();
-                console.log("Successfully reloaded application (/) commands.");
-                return [3 /*break*/, 3];
+                resp = _a.sent();
+                return [4 /*yield*/, resp.json()];
             case 2:
+                data = _a.sent();
+                hourlyTemperatures = data.hourly.temperature_2m;
+                avgTemperature = hourlyTemperatures.reduce(function (acc, temp) { return acc + temp; }, 0) /
+                    hourlyTemperatures.length;
+                timezone = data.timezone;
+                return [2 /*return*/, {
+                        avgTemperature: avgTemperature.toFixed(2),
+                        timezone: timezone,
+                        currentTemperature: data.current.temperature_2m,
+                    }];
+            case 3:
                 error_1 = _a.sent();
-                console.error(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                console.error("Error fetching weather data:", error_1);
+                return [2 /*return*/, null];
+            case 4: return [2 /*return*/];
         }
     });
-}); })();
+}); };
+exports.default = fetchWeather;

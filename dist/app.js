@@ -43,7 +43,10 @@ var discord_js_1 = require("discord.js");
 var dotenv_1 = __importDefault(require("dotenv"));
 var readClassRoom_1 = require("./readClassRoom");
 var schedule_1 = require("./schedule");
+var weather_1 = __importDefault(require("./weather"));
+var server_1 = __importDefault(require("./server"));
 dotenv_1.default.config();
+(0, server_1.default)();
 var secrete_key = process.env.SECRETE_KEY;
 var client = new discord_js_1.Client({
     intents: [
@@ -62,24 +65,53 @@ client.on("messageCreate", function (message) {
     }
 });
 client.on("interactionCreate", function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, day, result;
+    var result, day, result, infoWeather, embed;
     return __generator(this, function (_a) {
-        if (interaction.isCommand() && interaction.commandName === "kunho") {
-            console.log("kunho command called");
-            result = (0, readClassRoom_1.getClassInfo)(schedule_1.schedule);
-            interaction.reply({
-                content: result,
-            });
+        switch (_a.label) {
+            case 0:
+                if (interaction.isCommand() && interaction.commandName === "kunho") {
+                    console.log("kunho command called");
+                    result = (0, readClassRoom_1.getClassInfo)(schedule_1.schedule);
+                    interaction.reply({
+                        content: result,
+                    });
+                }
+                if (interaction.isCommand() && interaction.commandName === "sabai") {
+                    console.log("sabai command called");
+                    day = interaction.options.getString("day");
+                    result = (0, readClassRoom_1.getScheduleDay)(schedule_1.schedule, day);
+                    interaction.reply({
+                        content: result,
+                    });
+                }
+                if (!(interaction.isCommand() && interaction.commandName === "din")) return [3 /*break*/, 2];
+                console.log("din command called");
+                return [4 /*yield*/, (0, weather_1.default)()];
+            case 1:
+                infoWeather = _a.sent();
+                embed = new discord_js_1.EmbedBuilder()
+                    .setTitle("Weather Info")
+                    .setDescription("Weather information kathamndu Today ⚡️☀️")
+                    .setColor("#0099ff")
+                    .addFields({
+                    name: "Current Temperature 🌡️",
+                    value: "".concat(infoWeather === null || infoWeather === void 0 ? void 0 : infoWeather.currentTemperature, "\u00B0C"),
+                    inline: true,
+                }, {
+                    name: "Timezone 🕒",
+                    value: infoWeather === null || infoWeather === void 0 ? void 0 : infoWeather.timezone,
+                    inline: true,
+                }, {
+                    name: "Average Temperature 🌍 KTM",
+                    value: "".concat(infoWeather === null || infoWeather === void 0 ? void 0 : infoWeather.avgTemperature, "\u00B0C"),
+                    inline: true,
+                });
+                interaction.reply({
+                    embeds: [embed],
+                });
+                _a.label = 2;
+            case 2: return [2 /*return*/];
         }
-        if (interaction.isCommand() && interaction.commandName === "sabai") {
-            console.log("sabai command called");
-            day = interaction.options.getString("day");
-            result = (0, readClassRoom_1.getScheduleDay)(schedule_1.schedule, day);
-            interaction.reply({
-                content: result,
-            });
-        }
-        return [2 /*return*/];
     });
 }); });
 client.login(secrete_key);
