@@ -9,8 +9,10 @@ import dotenv from "dotenv";
 import { getClassInfo, getScheduleDay } from "./readClassRoom";
 import { schedule } from "./schedule";
 import fetchWeather from "./weather";
+import server from "./server";
 
 dotenv.config();
+server();
 
 const secrete_key = process.env.SECRETE_KEY;
 
