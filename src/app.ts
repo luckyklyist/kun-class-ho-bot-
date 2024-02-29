@@ -12,7 +12,6 @@ import fetchWeather from "./weather";
 import server from "./server";
 
 dotenv.config();
-server();
 
 const secrete_key = process.env.SECRETE_KEY;
 
@@ -26,6 +25,7 @@ const client = new Client({
 
 client.on("ready", () => {
   console.log("I am ready!");
+  server();
 });
 
 client.on("messageCreate", (message: Message) => {
