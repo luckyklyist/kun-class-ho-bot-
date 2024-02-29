@@ -46,7 +46,6 @@ var schedule_1 = require("./schedule");
 var weather_1 = __importDefault(require("./weather"));
 var server_1 = __importDefault(require("./server"));
 dotenv_1.default.config();
-(0, server_1.default)();
 var secrete_key = process.env.SECRETE_KEY;
 var client = new discord_js_1.Client({
     intents: [
@@ -57,6 +56,7 @@ var client = new discord_js_1.Client({
 });
 client.on("ready", function () {
     console.log("I am ready!");
+    (0, server_1.default)();
 });
 client.on("messageCreate", function (message) {
     console.log(message.content);
