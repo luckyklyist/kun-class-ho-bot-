@@ -7,10 +7,8 @@ var http_1 = __importDefault(require("http"));
 function startServer() {
     var server = http_1.default.createServer(function (req, res) {
         res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end("Hello World\n");
+        res.end("Klyister is online 😎\n");
     });
-    server.listen(8080, "localhost", function () {
-        console.log("Server running at http://localhost:3000/");
-    });
+    server.listen(8080);
 }
 exports.default = startServer;
