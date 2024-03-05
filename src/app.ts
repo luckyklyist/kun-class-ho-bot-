@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 import { getClassInfo, getScheduleDay } from "./readClassRoom";
 import { schedule } from "./schedule";
 import fetchWeather from "./weather";
-import server from "./server";
+import startServer from "./server";
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ const client = new Client({
 
 client.on("ready", () => {
   console.log("I am ready!");
-  server();
+  startServer();
 });
 
 client.on("messageCreate", (message: Message) => {
