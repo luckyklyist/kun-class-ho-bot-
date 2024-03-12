@@ -17,6 +17,36 @@ const commands = [
         description: "Select the day",
         type: 3,
         required: true,
+        choices: [
+          {
+            name: "Sunday",
+            value: "sun",
+          },
+          {
+            name: "Monday",
+            value: "mon",
+          },
+          {
+            name: "Tuesday",
+            value: "tue",
+          },
+          {
+            name: "Wednesday",
+            value: "wed",
+          },
+          {
+            name: "Thursday",
+            value: "thu",
+          },
+          {
+            name: "Friday",
+            value: "fri",
+          },
+          {
+            name: "Saturday",
+            value: "sat",
+          },
+        ],
       },
     ],
   },

@@ -45,8 +45,7 @@ client.on("interactionCreate", async (interaction) => {
   }
   if (interaction.isCommand() && interaction.commandName === "sabai") {
     console.log("sabai command called");
-    // @ts-ignore
-    const day = interaction.options.getString("day");
+    const day = interaction.options.get("day")?.value as string;
     const result = getScheduleDay(schedule, day);
     interaction.reply({
       content: result,
